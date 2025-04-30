@@ -1,0 +1,46 @@
+//This tsconfig.node.json file is a TypeScript configuration file specifically designed for Node.js environments, such as when using TypeScript with Vite.
+//It's likely being used to ensure that the TypeScript compiler correctly handles modern ES module syntax and bundler-compatible module resolution for Vite,
+//along with specific optimizations like skipping declaration file checks and allowing synthetic default imports.
+
+{
+    "compilerOptions": {
+      "composite": true,
+      "skipLibCheck": true,
+      "module": "ESNext",
+      "moduleResolution": "bundler",
+      "allowSyntheticDefaultImports": true
+    },
+    "include": ["vite.config.ts"]
+  }
+
+//The compilerOptions section contains various settings that control how TypeScript compiles the code.
+
+//This is what each of these options mean:
+
+//"composite": true means that TypeScript will treat this project as part of a composite project.
+//A composite project enables the use of project references, which helps in large projects with multiple TypeScript projects.
+//It allows the project to be built incrementally, meaning only files that have changed since the last build are recompiled.
+
+//"skipLibCheck": true tells TypeScript to skip type checking of declaration files (.d.ts files).
+//This is useful for speeding up compilation, especially if you are using third-party libraries that are well-typed and you trust their definitions.
+//It can reduce compile times but might skip some issues in external type definitions.
+
+//"module": "ESNext" specifies that the output should use the latest JavaScript module syntax (ES modules).
+//This means TypeScript will use import and export for modules instead of older CommonJS (require and module.exports).
+//ESNext is a reference to the latest ECMAScript specification, which is useful for environments like Vite, which supports modern ES module-based code.
+
+//"moduleResolution": "bundler" tells TypeScript how it should resolve modules.
+//By default, TypeScript uses node resolution for Node.js projects, but when set to bundler, it optimizes module resolution for bundlers like Vite or Webpack.
+//This helps TypeScript understand how to deal with dependencies and modules in the context of modern bundlers that are designed to work with ES modules.
+
+//"allowSyntheticDefaultImports":true allows TypeScript to treat default imports as if they were present in modules that don't explicitly export a default.
+//This is typically used to enable default imports from CommonJS-style modules.
+//For instance, you can do import fs from 'fs', even if the fs module does not define a default export.
+//It allows more flexible imports, especially in projects that mix module types.
+
+
+//The "include" section specifies the files or directories that TypeScript should include for compilation.
+
+//"vite.config.ts" tells TypeScript to include the vite.config.ts file in the compilation process.
+//Since this file is often used to configure Vite (a build tool), it is important that TypeScript understands its structure and can check for any type errors in the configuration file itself.
+

@@ -1,0 +1,35 @@
+<!doctype html>
+<!-- Declares the document type as HTML5 -->
+<html lang="en">
+<!-- Opens the HTML document and specifies English as the language -->
+<head>
+    <meta charset="UTF-8" />
+    <!-- Sets the character encoding to UTF-8 (supports most characters from all languages) -->
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+     <!-- Links an SVG image as the website's favicon (appears in browser tabs) it's located under tha public folder-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Ensures proper scaling and responsiveness on mobile devices -->
+    <!-- width=device-width: sets the viewport to the width of the device -->
+    <!-- initial-scale=1.0: sets the initial zoom level when the page is loaded -->
+    <title>InfinitumAdmin</title>
+    <!-- Sets the title of the web page (shown in the browser tab) -->
+</head>
+
+<body>
+    <div id="app"></div>
+    <!-- Placeholder div where your JavaScript framework (Vue) will mount its content -->
+    <!-- This is the placeholder where the Vue app will be injected-->
+    <script type="module" src="/src/main.ts"></script>
+    <!-- Loads the main TypeScript module (usually used in modern frontend frameworks like Vue 3 + Vite) -->
+    <!-- The 'type="module"' allows using ES module syntax (e.g., import/export) -->
+    <!-- <script src="/src/main.ts"> loads my Vue application-->
+</body>
+
+</html>
+<!-- Closes the HTML document -->
+
+<!-- This is a template for a modern web application, likely built using Vite and a JavaScript/TypeScript framework like Vue.js. -->
+<!-- It sets up a basic HTML5 page that loads your frontend app from main.ts, which dynamically renderes into the <dic id="app"> -->
+
+<!-- Overview of the execution flow in the browser:-->
+<!-- HTML loads -> Browser executes main.ts -> Vue app is created with App.vue as root -> Router and Pinia are set up -> App is mounted inside <div id="app"> in index.html -->

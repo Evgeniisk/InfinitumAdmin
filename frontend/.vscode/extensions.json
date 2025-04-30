@@ -1,0 +1,8 @@
+{
+  "recommendations": ["Vue.volar", "Vue.vscode-typescript-vue-plugin"]
+}
+//Specified recommended VS Code extensions for the project
+//"Vue.volar" // Volar: Provides advanced IDE support for Vue 3, including TypeScript support, type checking, and template intellisense
+//"Vue.vscode-typescript-vue-plugin" //Vue TypeScript Plugin: Enhances TypeScript experience specifically in '.vue' files (used with Volar)
+
+//This dile helps suggest extensions to anyone opening the project in VS Code, ensuring a consistent and productive development experience with Vue3 + TypeScript.
