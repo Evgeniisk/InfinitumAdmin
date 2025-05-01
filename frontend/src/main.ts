@@ -7,7 +7,7 @@ import router from './router'
 import { createPinia } from 'pinia'
 //imports the function to create a new Pinia store (state management library, similar to Vuex)
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 //Imports Bootstrap's CSS and JS for styling and interactive UI components
 const pinia = createPinia()
 // Initialises the Pinia store, so it can be used across my app.

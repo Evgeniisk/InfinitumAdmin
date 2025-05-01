@@ -3,19 +3,37 @@
     <main class="container pt-4">
         <!-- Bootstrap classes: wraps content in a Bootstrap container with top padding. -->
         <div>
-            <router-link
-                class=""
-                :to="{name: 'Landing Page'}"
-            >
-                Landing Page
-            </router-link>
-            |
-            <router-link
-                class=""
-                :to="{name: 'Signup/Login Page'}"
-            >
-                Signup/Login Page
-            </router-link>
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <router-link
+                    class="navbar-brand"
+                    :to="{name: 'Landing Page'}"
+                >
+                    <img src="/src/assets/vue.svg" width="30" height="30" alt="">
+                </router-link>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item active">
+                            <router-link
+                                class="nav-link"
+                                :to="{name: 'Security Info Page'}"
+                            >
+                                Security Information
+                            </router-link>
+                        </li>
+                        <li class="nav-item active">
+                            <router-link
+                                class="nav-link" 
+                                :to="{name: 'Signup/Login Page'}"
+                            >
+                                Signup/Login
+                            </router-link>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         </div>
         <!-- the <router-link> is a Vue Router component that renderes as an <a> tag. -->
         <!-- :to="{name: 'Main Page'} uses named routes for navigation. -->
@@ -41,6 +59,9 @@ export default defineComponent({
 <!-- Registers RouterView so it can be used in the template. -->
 
 <style scoped>
+nav{
+    background-color: rgb(255, 255, 255);
+}
 </style>
 
 <!-- Empty for now. Scoped means styles (when added) will only apply to this component, not globally. -->
