@@ -85,9 +85,10 @@ def api_client_individual(request):
         Fname = data.get('Fname')
         Lname = data.get('Lname')
         phone = data.get('phone')
+        email = data.get('email')
         address = data.get('address')
         workplace = request.user.workplace
-        client_individual_post = Client_Individual.objects.create(Fname=Fname, Lname=Lname, phone=phone, address=address, workplace=workplace)
+        client_individual_post = Client_Individual.objects.create(Fname=Fname, Lname=Lname, phone=phone, address=address, email=email, workplace=workplace)
         return JsonResponse(client_individual_post.as_dict())
     
     elif request.method == 'PUT':
@@ -96,11 +97,13 @@ def api_client_individual(request):
         Fname = data.get('Fname')
         Lname = data.get('Lname')
         phone = data.get('phone')
+        email = data.get('email')
         address = data.get('address')
         client_individual_put = Client_Individual.objects.get(workplace = request.user.workplace, id=id)
         client_individual_put.Fname = Fname
         client_individual_put.Lname = Lname
         client_individual_put.phone = phone
+        client_individual_put.email = email
         client_individual_put.address = address
         client_individual_put.save()
         return JsonResponse(client_individual_put.as_dict())
@@ -188,12 +191,12 @@ def api_contract(request):
         if 'client_individual_id' in data:
             client_individual_id = data.get('client_individual_id')
             client_individual = Client_Individual.objects.get(id=client_individual_id, workplace = request.user.workplace)
-            contract_get = Contract.objects.create(total_amount=total_amount, workplace = request.user.workplace, client_individual=client_individual)
+            contract_post = Contract.objects.create(total_amount=total_amount, workplace = request.user.workplace, client_individual=client_individual)
         elif 'client_company_id' in data:
             client_company_id = data.get('client_company_id')
             client_company = Client_Company.objects.get(id=client_company_id, workplace=request.user.workplace)
-            contract_get = Contract.objects.create(total_amount=total_amount, workplace = request.user.workplace, client_company=client_company)
-        return JsonResponse(contract_get.as_dict())
+            contract_post = Contract.objects.create(total_amount=total_amount, workplace = request.user.workplace, client_company=client_company)
+        return JsonResponse(contract_post.as_dict())
     
     elif request.method == 'PUT':
         data = json.loads(request.body)
@@ -235,7 +238,7 @@ def api_contract(request):
         return HttpResponse(status=405)
     
 
-
+#Rewrite the GET method to process query in the URL instead of loading the request body.
 @login_required
 def api_Recurring_Invoice(request):
     if request.method == 'GET':
@@ -310,10 +313,10 @@ def api_Invoice(request):
         data = json.loads(request.body)
         id = data.get('id')
         if 'billed_to_company' in data:
-            billed_to_company = data.get('billed_to_company')
+            billed_to_company = Client_Company.objects.get(id=data.get('billed_to_company'))
             invoice_delete = Invoice.objects.get(id=id, billed_to_company=billed_to_company, workplace=request.user.workplace)
         elif 'billed_to_individual' in data:
-            billed_to_individual = data.get('billed_to_individual')
+            billed_to_individual = Client_Individual.objects.get(id=data.get('billed_to_individual'))
             invoice_delete = Invoice.objects.get(id=id, billed_to_individual=billed_to_individual, workplace=request.user.workplace)
         invoice_delete.delete()
         return JsonResponse({'message': 'Invoice deleted successfully'})
@@ -322,7 +325,7 @@ def api_Invoice(request):
         return HttpResponse(status=405)
     
 
-
+#Rewrite the GET method to process query in the URL instead of loading the request body.
 @login_required
 def api_ContractItem(request):
     if request.method == 'GET':
@@ -382,12 +385,19 @@ def api_Job(request):
     elif request.method == 'POST':
         data = json.loads(request.body)
         ItemName = data.get('ItemName')
-        description = data.get('description')
-        started_at = data.get('started_at')
         status = data.get('status')
         completed_at = data.get('completed_at')
         correspons_to = data.get('ContractItem')
-        job_item_post = Job.objects.create(ItemName=ItemName, description=description, started_at=started_at, status=status, completed_at=completed_at, corresponds_to=correspons_to, user=request.user, workplace=request.user.workplace)
+        if 'description' in data:
+            description = data.get('description')
+        if 'started_at' in data:
+            started_at = data.get('started_at')
+        if description == True:
+            job_item_post = Job.objects.create(ItemName=ItemName, description=description, status=status, completed_at=completed_at, corresponds_to=correspons_to, user=request.user, workplace=request.user.workplace)
+        elif started_at == True:
+            job_item_post = Job.objects.create(ItemName=ItemName, started_at=started_at, status=status, completed_at=completed_at, corresponds_to=correspons_to, user=request.user, workplace=request.user.workplace)
+        elif description == True and started_at == True:
+            job_item_post = Job.objects.create(ItemName=ItemName, description=description, started_at=started_at, status=status, completed_at=completed_at, corresponds_to=correspons_to, user=request.user, workplace=request.user.workplace)
         return JsonResponse(job_item_post.as_dict())
     
     elif request.method == 'PUT':

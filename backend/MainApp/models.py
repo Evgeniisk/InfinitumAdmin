@@ -35,6 +35,7 @@ class Client_Individual(models.Model):
     Fname = models.CharField(max_length=255)
     Lname = models.CharField(max_length=255)
     phone = models.CharField(max_length=255)
+    email = models.EmailField(max_length=255)
     address = models.TextField()
     workplace = models.ForeignKey(Workplace, null = True, blank=True, on_delete=models.SET_NULL)
 
@@ -44,6 +45,7 @@ class Client_Individual(models.Model):
             'Fname': self.Fname,
             'Lname': self.Lname,
             'phone': self.phone,
+            'email': self.email,
             'address': self.address,
         }
 
@@ -102,8 +104,8 @@ class Recurring_Invoice(models.Model):
 class Invoice(models.Model):
     total_amount = models.IntegerField()
     recurrence = models.ForeignKey(Recurring_Invoice, on_delete=models.CASCADE)
-    billed_to_company = models.ForeignKey(Client_Company, on_delete=models.CASCADE)
-    billed_to_individual = models.ForeignKey(Client_Individual, on_delete=models.CASCADE)
+    billed_to_company = models.ForeignKey(Client_Company, null=True, on_delete=models.CASCADE)
+    billed_to_individual = models.ForeignKey(Client_Individual, null=True, on_delete=models.CASCADE)
     workplace = models.ForeignKey(Workplace, null = True, blank=True, on_delete=models.SET_NULL)
 
     def as_dict(self):
@@ -130,9 +132,9 @@ class ContractItem(models.Model):
 class Job(models.Model):
     ItemName = models.CharField(max_length=255)
     description = models.TextField(null=True)
-    started_at = models.DateTimeField()
+    started_at = models.DateTimeField(null=True)
     status = models.CharField()
-    completed_at = models.DateTimeField()
+    completed_at = models.DateTimeField(null=True)
     corresponds_to = models.ForeignKey(ContractItem, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     workplace = models.ForeignKey(Workplace, on_delete=models.CASCADE)
