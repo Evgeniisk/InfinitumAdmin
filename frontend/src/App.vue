@@ -8,7 +8,7 @@
                     class="navbar-brand"
                     :to="{name: 'Landing Page'}"
                 >
-                    <img src="/src/assets/vue.svg" width="30" height="30" alt="">
+                    <img src="/src/assets/Project_logo.svg" width="100" height="100" alt="">
                 </router-link>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -26,9 +26,9 @@
                         <li class="nav-item active">
                             <router-link
                                 class="nav-link" 
-                                :to="{name: 'Signup/Login Page'}"
+                                :to="{name: 'Login Page'}"
                             >
-                                Signup/Login
+                                Login/Signup
                             </router-link>
                         </li>
                     </ul>

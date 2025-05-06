@@ -6,7 +6,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 // 1. Define route components.
 // These can be imported from other files
 import LandingPage from '../pages/LandingPage.vue';
-import SignupLoginPage from '../pages/SignupLoginPage.vue';
+import SignupLoginPage from '../pages/LoginPage.vue';
 import SecurityInfoPage from '../pages/SecurityInfoPage.vue';
 //import the Vue components that will be shown in on different routes.
 
@@ -33,8 +33,8 @@ const router = createRouter({
             component: LandingPage    // The component to render
         },
         {
-            path: '/SignupLogin/',       // URL path (e.g., http://localhost:5173/other/)
-            name: 'Signup/Login Page',    // Used in router-link to navigate
+            path: '/Login/',       // URL path (e.g., http://localhost:5173/other/)
+            name: 'Login Page',    // Used in router-link to navigate
             component: SignupLoginPage   // Component shown when this path is active
         },
         {
