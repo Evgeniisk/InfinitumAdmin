@@ -2,6 +2,8 @@ This is InfinitumAdmin web application MSc Computing and Information Systems (co
 
 This project provides a prototype solution for streamling, automating, centralising and making it easier for business to administrate their companies implemented as a full-stack web application. (Refer to the dissertation, demo video and reflective essay for full project details).
 
+When you download this project folder, please rename the folder from InfinitumAdmin-main to InfinitumAdmin as the name may affect the way the code works when it has to navigate and access directories in the project.
+
 
 PERSONAL SECURITY CONSIDERATIONS
 
