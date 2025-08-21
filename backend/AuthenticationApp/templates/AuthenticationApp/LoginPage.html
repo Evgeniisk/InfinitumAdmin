@@ -1,0 +1,31 @@
+{% extends "AuthenticationApp/base.html" %}
+
+{% block content %}
+    <h2 class="fw-bold text-center mb-4 display-6">Log in to your account</h2>
+    <form method="POST" action="{% url 'loginformsubmit' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="InputEmail" class="form-label">Email address</label>
+            <input type="email" name="email" class="form-control" id="InputEmail" placeholder="example@gmail.com" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" placeholder="**************" id="InputPassword">
+            </div>
+        </div>
+        {% if request.GET.error == "invalid" %}
+        <div class="alert alert-danger">Invalid credentials. Please try again.</div>
+        {% endif %}
+        <div>
+            <p><a id="reset_password" href="{% url 'password_reset_view' %}">Forgot password</a></p>
+        </div>
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button id="login-submit" type="Log in" class="btn btn-primary">Log in</button>
+        </div>
+    </form>
+    <p></p>
+    <p>Dont have an account yet?</p>
+    <p>Sign up <a id="SignUp" href="{% url 'Sign_Up' %}">here</a></p>
+{% endblock %}

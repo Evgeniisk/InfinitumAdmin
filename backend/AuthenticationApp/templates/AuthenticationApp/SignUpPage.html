@@ -1,0 +1,62 @@
+<!-- First name, last name, email address, password, workplace name, workplace address-->
+{% extends "AuthenticationApp/base.html" %}
+
+{% block content %}
+<h2 class="fw-bold text-center mb-4 display-6">Fill this form to sign up:</h2>
+<form method="POST" action="{% url 'register_company' %}">
+    {% csrf_token %}
+    <div class="row g-3">
+        <div class="col">
+            <label for="inputFirstName" class="form-label">First name*</label>
+            <input type="text" name="first_name" class="form-control" placeholder="Eugene" aria-label="First name">
+        </div>
+        <div class="col">
+            <label for="inputLastName" class="form-label">Last name*</label>
+            <input type="text" name="last_name" class="form-control" placeholder="Korostelev" aria-label="Last name">
+        </div>
+        <div class="col-md-12">
+            <label for="inputEmail" class="form-label">Email address*</label>
+            <input type="email" name="email" class="form-control" placeholder="example@gmail.com" aria-label="Email address">
+        </div>
+        <div class="col-md-12">
+            <label for="input Company name" class="form-label">Your company's name*</label>
+            <input type="text" name="workplace_name" class="form-control" placeholder="Example Ltd" aria-label="Company name">
+        </div>
+        <div class="col-md-12">
+            <label for="input Address line 1" class="form-label">Company's Address</label>
+            <input type="text" name="workplace_address_line_1" class="form-control" placeholder="123 Example St" aria-label="Address 1">
+        </div>
+        <div class="col-md-12">
+            <label for="input Address line 2" class="form-label">Address 2</label>
+            <input type="text" name="workplace_address_line_2" class="form-control" placeholder="Flat 1" aria-label="Address 2">
+        </div>
+        <div class="col-md-6">
+            <label for="inputCity" class="form-label">City</label>
+            <input type="text" name="workplace_address_city" class="form-control" placeholder="London" aria-label="City">
+        </div>
+        <div class="col-md-2">
+            <label for="inputZip" class="form-label">Zip</label>
+            <input type="text" name="workplace_address_Zip" class="form-control" placeholder="NW1 2DL" aria-label="Zip">
+        </div>
+        <div class="col-md-4">
+            <label for="inputCountry" class="form-label">Country</label>
+            <select id="inputCountry" name="workplace_address_Country" class="form-select">
+                <option selected disabled>Choose</option>
+                {% for country in countries %}
+                    <option value="{{ country }}">{{ country }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-12">
+            <label for="Password" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" placeholder="**************" id="InputPassword">
+            <div id="passwordHelp" class="form-text">We recommend using a password that is not common, at least 12 random characters long including lower and uppsercase alphanumeric and special characters. For more information on using strong passwords visit <a href="https://support.microsoft.com/en-gb/windows/create-and-use-strong-passwords-c5cebb49-8c53-4f5e-2bc4-fe357ca048eb">Microsoft's Password Policy advice page</a>.</div>
+        </div>
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button id="signup-submit" type="Submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+</form>
+<div class="mb-3"></div>
+
+{% endblock %}

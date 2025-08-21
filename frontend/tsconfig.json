@@ -1,6 +1,3 @@
-//This tsconfig.json file is a TypeScript configuration file that is typically used in projects that use TypeScript with modern JavaScript features and a bundler like Vite.
-//It also has strict linting rules enabled.
-
 {
     "compilerOptions": {
       "target": "ES2020",
@@ -9,7 +6,6 @@
       "lib": ["ES2020", "DOM", "DOM.Iterable"],
       "skipLibCheck": true,
   
-      /* Bundler mode */
       "moduleResolution": "bundler",
       "allowImportingTsExtensions": true,
       "resolveJsonModule": true,
@@ -17,7 +13,6 @@
       "noEmit": true,
       "jsx": "preserve",
   
-      /* Linting */
       "strict": true,
       "noUnusedLocals": true,
       "noUnusedParameters": true,
@@ -26,74 +21,3 @@
     "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
     "references": [{ "path": "./tsconfig.node.json" }]
   }
-
-// the compilerOptions section defines various options that control how TypeScript will compile the project.
-
-//Here’s what each option does:
-
-//"target": "ES2020" tells TypeScript to compile the code to ECMAScript 2020 (ES2020) syntax.
-//This means that TypeScript will use features introduced in ES2020, such as optional chaining, nullish coalescing, and BigInt, and output them directly in the compiled JavaScript code.
-
-//"useDefineForClassFields":true ensures that TypeScript uses the define method for class fields in the generated JavaScript code, following the ES2022+ proposal for class fields.
-//This means the code will use a more accurate method of defining class fields that aligns with the current JavaScript standard.
-
-//"module":"ESNext" means that TypeScript will output code using the latest ECMAScript module syntax (i.e., import and export).
-//This is useful for modern JavaScript environments and bundlers that support ES modules, like Vite.
-
-//"lib": ["ES2020", "DOM", "DOM.Iterable"] specifies the libraries that should be included in the TypeScript project.
-//ES2020 includes all the features of ECMAScript 2020.
-//DOM provides types for the standard Web API (e.g., document, window, etc.).
-//DOM.Iterable includes types for DOM collections that are iterable (e.g., NodeList and HTMLCollection).
-
-//"skipLibCheck":true skips the type checking of declaration files (.d.ts files).
-//This can significantly speed up the compilation process and is useful when you trust the correctness of external libraries' types.
-
-//"SkipLibCheck":true skips the type checking of declaration files (.d.ts files).
-//This can significantly speed up the compilation process and is useful when you trust the correctness of external libraries' types.
-
-//"moduleResolution":"bundler" tells TypeScript how to resolve modules.
-//It uses a bundler-compatible resolution strategy, which is optimized for tools like Vite or Webpack, that work with ES modules.
-
-//"allowImportingTsExtensions":true allows TypeScript to import files with .ts and .tsx extensions directly.
-//This is useful in projects where TypeScript is used for both source code and module imports.
-
-//"resolveJsonModule":true allows TypeScript to import JSON files as modules, so you can import myFile from './myFile.json' without issues.
-//This is useful for projects that need to work with JSON data directly.
-
-//"isolatedModules":true makes TypeScript treat each file as an isolated module.
-//This ensures that each file is treated as a separate unit of code and that imports/exports are validated correctly.
-//It is often required when using bundlers or transpilers like Babel or Vite.
-
-//"jsx":"preserver" means that TypeScript will preserve JSX syntax in .tsx files instead of converting it to React.createElement.
-//This is useful in projects using a framework like Vue or React, where JSX syntax is used but the JSX transformation will be handled by the bundler (Vite in this case).
-
-
-//"strict":true enables Linting Options. Those options enforce stricter type-checking in the project:
-
-//"noUnusedLocals": true tells TypeScript to report an error if there are variables in your code that are declared but never used.
-
-//"noUnusedParameters":true tells TypeScript to report an error if there are function parameters that are never used within the function.
-
-//"noFallthroughCasesInSwitch":true prevents fall-through behavior in switch statements, 
-//i.e., it will show an error if there are multiple case blocks that do not have a break or return statement to prevent unintentional fall-through.
-
-
-// "include" section specifies which files and directories should be included in the compilation process.
-
-// "src/**/*.ts": Includes all TypeScript files (.ts files) within the src directory and its subdirectories.
-
-// "src/**/*.d.ts": Includes all declaration files (.d.ts files) within the src directory and its subdirectories. 
-// Declaration files define types and interfaces for TypeScript.
-
-// "src/**/*.tsx": Includes all TypeScript JSX files (.tsx files) within the src directory and its subdirectories. 
-// This is useful for projects that use JSX, such as Vue or React.
-
-// "src/**/*.vue": Includes all Vue component files (.vue files) within the src directory and its subdirectories. 
-// This is useful for projects using Vue.js, and TypeScript support for .vue files is provided by @vitejs/plugin-vue.
-
-
-//"references" section specifies TypeScript project references, which allow one TypeScript project to reference another, helping with larger projects.
-
-//[{ "path": "./tsconfig.node.json" }] tells TypeScript to reference the tsconfig.node.json file.
-//It is useful for projects that have separate configurations for Node.js or certain parts of the project (like Vite or backend code).
-//It allows TypeScript to properly resolve types and project dependencies when using multiple configurations.

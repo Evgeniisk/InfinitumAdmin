@@ -11,21 +11,39 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from corsheaders.defaults import default_headers
+import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(BASE_DIR / ".env")
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-nc8fei(hbo8h1u79*de_at7%b4ku1$c--q$r2(33agjrx_l-x4'
+#Djago secret key, debug mode and allowed hosts configurations
+#This is like this because when I was deploying it I would put these configurations in the .env file
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
+if not SECRET_KEY:
+    SECRET_KEY = 'django-insecure-dev-key-for-local-development-only'
+    print("WARNING: Using indecure development SECRET_KEY. Set DJANGO_SECRET_KEY in production!")
+
+DEBUG = os.getenv('DJANGO_DEBUG', 'True').lower() in ['true', '1', 'yes']
+
+allowed_hosts_env = os.getenv('DJANGO_ALLOWED_HOSTS')
+if allowed_hosts_env:
+    ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_env.split(',') if host.strip()]
+else:
+    ALLOWED_HOSTS = []
+
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -37,11 +55,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'MainApp',
     'AuthenticationApp',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -74,10 +95,18 @@ WSGI_APPLICATION = 'InfinitumAdmin.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+#The commented out parts are for use in production
+#This is set up for use in development
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        #"ENGINE": "django.db.backends.postgresql",
+        #"NAME": os.getenv("DB_NAME"),
+        #"USER": os.getenv("DB_USER"),
+        #"PASSWORD": os.getenv("DB_PASSWORD"),
+        #"HOST": os.getenv("DB_HOST", "localhost"),
+        #"PORT": os.getenv("DB_PORT", "5432"),
     }
 }
 
@@ -116,25 +145,62 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "MainApp" / "static"
+]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-
-
+#
 #Settings added by me:
+#When in my templates I use the static template tag to build the URL for the given relative path using the configured staticfiles STORAGES alias.
+STATIC_URL = "/static/"
+
+#Used for configuring cron jobs linux app in production
+#Executes the specified file in the specified directory every day at 9am (refer to the MainApp.cron file)
+CRONJOBS = [
+    ('0 9 * * *', 'django.core.management.call_command', ['invoice_automations'])
+]
+
+#Media files sotrage configurations
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 #Check back on this
+#Tells Django to use my custom model for user authentication defined in models.py
 AUTH_USER_MODEL = 'AuthenticationApp.CustomUser'
-#Here I tell Django to use my custom model for user authentication defined in models.py
 
-#This is for development only. for production I need other email configuration.
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+#Email configurations for the email server I send all the email from for this web app
+#Refer to the .env file in the backend folder, this is where the credentials are retrieved from
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv("EMAIL_HOST")
+EMAIL_PORT = int(os.getenv("EMAIL_PORT"))
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "True").lower()
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 #This is the manually defined url that the @login_required decorator uses if users are not authenticated:
-LOGIN_URL = '/auth/api/login/'
+LOGIN_URL = '/LoginPage/'
 
+#Allows credentials from frontend
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173", #Vue dev server
+]
+
+#Allowed cors headers
+CORS_ALLOW_HEADERS = list(default_headers) + ['Url-Header',]
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+#DocuSign developer account credentials
+#Refer to the .env file in the backend folder, this is where the credentials are retrieved from
+#These credentials are used to make API calls with my developer account
+DOCUSIGN_CLIENT_ID = os.getenv("DOCUSIGN_CLIENT_ID")
+DOCUSIGN_CLIENT_SECRET = os.getenv("DOCUSIGN_CLIENT_SECRET")
